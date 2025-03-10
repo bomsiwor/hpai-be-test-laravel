@@ -1,7 +1,7 @@
 FROM php:8.2-fpm
 
 # Set working directory to www
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 # Install dependencies for future use of PHP
 RUN apt-get update && apt-get install -y \
@@ -39,11 +39,11 @@ RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy application files
-COPY . /var/www/
-COPY .env.example /var/www/.env
+COPY . /var/www/html
+COPY .env /var/www/html/.env
 
 # Copy composer files separately to leverage Docker cache
-COPY composer.json composer.lock /var/www/
+COPY composer.json composer.lock /var/www/html
 
 # Set correct permissions
 # Set new user created previously to have permission at the project dir

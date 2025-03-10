@@ -5,9 +5,9 @@ services:
       dockerfile: Dockerfile
     container_name: be_app_hpai
     restart: unless-stopped
-    working_dir: /var/www/
+    working_dir: /var/www/html
     volumes:
-      # - ./:/var/www
+      # - ./:/var/www/html
       - ./storage:/var/www/storage
     networks:
       - laravel
@@ -26,12 +26,13 @@ services:
       - laravel
 
   nginx:
-    image: nginx:alpine
+    image: nginx:stable-alpine
     container_name: laravel_nginx
     restart: unless-stopped
     ports:
       - "8012:80"
     volumes:
+      - ./:/var/www/html
       - ./nginx/conf.d:/etc/nginx/conf.d
     networks:
       - laravel
