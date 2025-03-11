@@ -24,13 +24,11 @@ Super admin tidak akan dihapus oleh user lain untuk memastikan keamanan dari apl
 
 **Gambar 1: Diagram ER untuk pendekatan Single Role per User**
 
-![Alt text](./01-erd-a.png "First Approach")
+![First Approach](./01-erd-a.png "First Approach")
 
 ---
 
 ## Second Approach: Multi Role per User dengan Tabel Perantara
-
-![Alt text](./01-erd-b.png "Second Approach")
 
 Perbedaan pada pendekatan ini adalah pada struktur data yang dinormalisasi. Jika role yang dibutuhkan semakin banyak dan memungkinkan adanya multi-role untuk setiap user, maka kita akan menggunakan pendekatan dengan kardinalitas many-to-many.
 
@@ -40,6 +38,6 @@ Tabel pivot **tidak perlu memiliki ID sebagai primary key**, cukup menggunakan k
 
 **Gambar 2: Diagram ER untuk pendekatan Multi Role per User**
 
-![Alt text](./01-erd-a.png "First Approach")
+![Second Approach](./01-erd-b.png "Second Approach")
 
 Saat ini, implementasi dari pendekatan ini terletak pada branch `main-multirole`.
