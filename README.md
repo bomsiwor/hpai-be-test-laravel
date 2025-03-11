@@ -21,15 +21,43 @@ This project is a Laravel-based REST API that includes user authentication, role
 - Composer
 - Laravel 11
 - MySQL or PostgreSQL database
+- Docker
 
 ### Setup
 
-1. Clone the repository:
+#### Deploy with Docker
+
+1. Clone repository
+
+2. No need to run `compose install`
+
+3. Copy the `.env` file and configure database settings:
 
     ```sh
-    git clone <repository_url>
-    cd <project_folder>
+    cp .env.example .env
     ```
+
+    Change the DB Host into **db**
+    You can customize the username and password
+
+4. Run on CLI
+
+    ```sh
+    docker compose up -d
+    ```
+
+    By default you can access the API on **http://localhost:8012**
+
+    This will create an user with `super-admin` role. You can log in and add other user.
+    | email | password |
+    | ------------- | -------------- |
+    | admin@mail.com | Admin1234! |
+
+    > Customize the port by changing conf on directory nginx/ and customize the docker compose on nginx service
+
+#### Running locally
+
+1. Clone the repository:
 
 2. Install dependencies:
 
@@ -54,6 +82,11 @@ This project is a Laravel-based REST API that includes user authentication, role
     ```sh
     php artisan migrate --seed
     ```
+
+    This will create an user with `super-admin` role. You can log in and add other user.
+    | email | password |
+    | ------------- | -------------- |
+    | admin@mail.com | Admin1234! |
 
 6. Install Passport:
 
@@ -99,6 +132,7 @@ This project is a Laravel-based REST API that includes user authentication, role
 Run the feature tests:
 
 Please change to you database name on phpunit.xml
+For better testing, create env.testing
 
 ```sh
 php artisan test

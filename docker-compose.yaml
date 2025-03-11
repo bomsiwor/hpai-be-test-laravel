@@ -8,9 +8,31 @@ services:
     working_dir: /var/www/html
     volumes:
       # - ./:/var/www/html
-      - ./storage:/var/www/storage
+      - ./storage:/var/www/html/storage
+    depends_on:
+      db:
+        condition: service_healthy
     networks:
       - laravel
+    command: >
+      bash -c "
+      echo 'Waiting for database...';
+
+      php artisan migrate:fresh;
+
+      if [ ! -f '/var/www/html/storage/passport_installed' ]; then
+        php artisan passport:key --force
+        php artisan passport:client --personal
+        touch /var/www/html/storage/passport_installed;
+      fi
+
+      if [ ! -f '/var/www/html/storage/seeds_run' ]; then
+        php artisan db:seed;
+        touch /var/www/html/storage/seeds_run;
+      fi
+
+      exec php-fpm
+      "
 
   db:
     image: postgres:latest
@@ -20,6 +42,10 @@ services:
       POSTGRES_DB: ${DB_DATABASE}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d laravel"]
+      interval: 5s
+      retries: 5
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
