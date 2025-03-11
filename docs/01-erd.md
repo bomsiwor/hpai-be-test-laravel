@@ -14,8 +14,6 @@
 
 ## First Approach: Single Role per User
 
-![Alt text](./01-erd-a.png "First Approach")
-
 Saat ini, mengingat jumlah role yang dibutuhkan sangat sedikit, hanya 3, maka solusi yang efisien adalah denormalisasi tabel sehingga menggunakan satu tabel `users` saja.
 
 Keterbatasan dari pendekatan ini adalah setiap user hanya memiliki satu role tertentu.
@@ -26,7 +24,7 @@ Super admin tidak akan dihapus oleh user lain untuk memastikan keamanan dari apl
 
 **Gambar 1: Diagram ER untuk pendekatan Single Role per User**
 
-_(Placeholder image)_
+![Alt text](./01-erd-a.png "First Approach")
 
 ---
 
@@ -42,6 +40,6 @@ Tabel pivot **tidak perlu memiliki ID sebagai primary key**, cukup menggunakan k
 
 **Gambar 2: Diagram ER untuk pendekatan Multi Role per User**
 
-_(Placeholder image)_
+![Alt text](./01-erd-a.png "First Approach")
 
 Saat ini, implementasi dari pendekatan ini terletak pada branch `main-multirole`.
