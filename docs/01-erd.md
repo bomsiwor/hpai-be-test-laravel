@@ -14,6 +14,8 @@
 
 ## First Approach: Single Role per User
 
+![Alt text](./01-erd-a.png "First Approach")
+
 Saat ini, mengingat jumlah role yang dibutuhkan sangat sedikit, hanya 3, maka solusi yang efisien adalah denormalisasi tabel sehingga menggunakan satu tabel `users` saja.
 
 Keterbatasan dari pendekatan ini adalah setiap user hanya memiliki satu role tertentu.
@@ -29,6 +31,8 @@ _(Placeholder image)_
 ---
 
 ## Second Approach: Multi Role per User dengan Tabel Perantara
+
+![Alt text](./01-erd-b.png "Second Approach")
 
 Perbedaan pada pendekatan ini adalah pada struktur data yang dinormalisasi. Jika role yang dibutuhkan semakin banyak dan memungkinkan adanya multi-role untuk setiap user, maka kita akan menggunakan pendekatan dengan kardinalitas many-to-many.
 
