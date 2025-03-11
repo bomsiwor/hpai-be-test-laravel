@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enum\RoleEnum;
 use App\Http\Requests\UserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 
@@ -14,7 +15,7 @@ class UserService
     public function getList()
     {
         // Get all user data
-        $result = $this->model->all();
+        $result = $this->model->with('roles')->get();
 
         return $result;
     }
@@ -25,8 +26,19 @@ class UserService
         // Because this is only operated on 1 table.
         $data = $request->validated();
 
+        // There will be only one super admin
+        $superadmin = Role::where('name', RoleEnum::SUPERADMIN->value)->first();
+
+        // If logged in user has superadmin, dont omit role
+        // Otherwise omit id from request
+        $superadmin = [$superadmin->id];
+
+        $rolesId = array_diff( $data['roles'], $superadmin);
+
         // Store using model
         $user = $this->model->create($data);
+
+        $user->roles()->sync($rolesId);
 
         // Return user to controller
         return $user;

@@ -19,7 +19,7 @@ class RoleMiddleware
         // If there is no user
         // nor the user does not have the roles passed from parameter
         // Return error message
-        if (! $request->user() || ! in_array($request->user()->role, $roles)) {
+        if (! $request->user() || ! $request->user()->roles()->whereIn("name", $roles)) {
             return response()->json(['message' => 'Forbidden. What are you doing here?!'], 403);
         }
 

@@ -33,7 +33,7 @@ class UserController extends Controller
 
     public function show(User $model)
     {
-        return $this->successResponse('Success get user detail', new UserResource($model));
+        return $this->successResponse('Success get user detail', new UserResource($model->load('roles')));
     }
 
     public function destroy(User $model)

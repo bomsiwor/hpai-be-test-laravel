@@ -27,7 +27,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /**
@@ -50,7 +49,11 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'roles' => RoleEnum::class,
         ];
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'roles_has_users', 'user_id', 'role_id');
     }
 }

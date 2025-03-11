@@ -30,10 +30,9 @@ class UserRequest extends BaseRequest
                 ->mixedCase()
                 ->numbers()
                 ->symbols(),
-            'role' => [
+            'roles.*' => [
                 'required',
-                'string',
-                Rule::in([RoleEnum::ADMIN->value, RoleEnum::REGULAR->value]),
+                'integer',
             ],
         ];
     }
